@@ -9,6 +9,6 @@ namespace MobMentality
 {
     class Logger
     {
-        FileStream loggerStream = new FileStream(DateTime.Now.ToString("yyyy.MM.dd"), FileMode.Create)
+        //FileStream loggerStream = new FileStream(DateTime.Now.ToString("yyyy.MM.dd"), FileMode.Create);
     }
 }

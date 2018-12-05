@@ -176,5 +176,27 @@ namespace MobMentality
         {
             mobPeople.RandomizeActive();
         }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> mobbers = new List<string>();
+            mobbers.AddRange(mobPeople.ActivePeople);
+            mobbers.AddRange(mobPeople.InactivePeople);
+
+            SettingsModel currentSettings = new SettingsModel
+            {
+                Mobbers = mobbers,
+                TurnMinutes = (Int16)myAppDictionary["TurnMinutes"],
+                BreakMinutes = (Int16)myAppDictionary["BreakMinutes"],
+                BreakTurns = (Int16)myAppDictionary["TurnsTillBreak"]
+            };
+
+            SettingsExportImport.Save(currentSettings);
+        }
+
+        private void LoadButton_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsExportImport.Load(myAppDictionary, mobPeople);
+        }
     }
 }

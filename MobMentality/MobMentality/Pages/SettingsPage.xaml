@@ -87,5 +87,10 @@
         </TextBox>
         <Label Name="ErrorMessageOnAddLabel" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Foreground="LightPink" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
         <Button Content="X"  Grid.Row="0" Grid.Column="4" VerticalContentAlignment="Center" HorizontalAlignment="Right" Height="46" VerticalAlignment="Top" Width="44" FontSize="20" Click="Button_Click" Panel.ZIndex="-1"/>
+        <StackPanel Grid.Column="3" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Orientation="Horizontal">
+            <Button Name="SaveButton" FontFamily="Wingdings" FontSize="30" Content="&lt;"  Height="50" Width="50" Click="SaveButton_Click"/>
+            <Button Name="LoadButton" FontFamily="Wingdings" FontSize="30" Content="1"  Height="50" Width="50" Click="LoadButton_Click"/>
+        </StackPanel>
+        
     </Grid>
 </Page>

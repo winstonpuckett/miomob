@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -48,7 +49,7 @@ namespace MobMentality
 
             SwitchWindow(State.Settings);
         }
-        
+
         //private void MainWindow_LocationChanged(object sender, EventArgs e)
         //{
         //    if (runningPage.IsLoaded && System.Windows.Input.Mouse.LeftButton != MouseButtonState.Pressed)
@@ -67,7 +68,7 @@ namespace MobMentality
             runningPage = new RunningPage();
             runningPage.GoToSettingsEvent += AnyPage_GoToSettingsEvent;
             runningPage.TimerUpEvent += RunningPage_TimerUpEvent;
-            
+
             settingsPage = new SettingsPage();
             settingsPage.StartMobbingEvent += SettingsPage_StartMobbingEvent;
 
@@ -145,7 +146,7 @@ namespace MobMentality
         {
             SwitchWindow(State.Settings);
         }
-        
+
         private void MainWindow_MouseLeave(object sender, MouseEventArgs e)
         {
             this.Width = 101;
@@ -157,7 +158,7 @@ namespace MobMentality
             this.Width = 140;
             this.Height = 140;
         }
-        
+
         private void RunningPage_Loaded(object sender, RoutedEventArgs e)
         {
             Left = myWindowPosition.X;
