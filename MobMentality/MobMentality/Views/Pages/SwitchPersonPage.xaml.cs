@@ -101,7 +101,6 @@ namespace MobMentality
             if (TimeForBreak)
             {
                 TimeForBreak = !TimeForBreak;
-                
             }
             else
             {

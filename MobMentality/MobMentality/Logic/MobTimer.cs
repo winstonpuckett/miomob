@@ -56,7 +56,7 @@ namespace MobMentality
             if (timeForBreak)
             {
                 time = (Int16)((Int16)myAppDictionary["BreakMinutes"] * 60);
-                myAppDictionary["BreakCounter"] = myAppDictionary["TurnsTillBreak"];
+                myAppDictionary["BreakCounter"] = (Int16)((Int16)myAppDictionary["TurnsTillBreak"] + 1);
             }
             else
             {
@@ -107,7 +107,6 @@ namespace MobMentality
                 else
                 {
                     myAppDictionary["BreakCounter"] = --breakCounter;
-
 
                     timeForBreak = false;
                 }

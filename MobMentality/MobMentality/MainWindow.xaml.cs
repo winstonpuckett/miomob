@@ -1,4 +1,5 @@
 ﻿using MobMentality.Pages;
+using MobMentality.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,7 +40,7 @@ namespace MobMentality
             this.Closing += MainWindow_Closing;
             this.MouseUp += MainWindow_MouseUp;
             this.MouseLeftButtonDown += MainWindow_MouseLeftButtonDown;
-            this.MouseLeftButtonUp += MainWindow_MouseLeftButtonUp;
+            //this.MouseLeftButtonUp += MainWindow_MouseLeftButtonUp;
             this.MouseEnter += MainWindow_MouseEnter;
             this.MouseLeave += MainWindow_MouseLeave;
             //this.LocationChanged += MainWindow_LocationChanged;
@@ -115,6 +116,8 @@ namespace MobMentality
                         this.Height = 140;
 
                         runningPage.TimeForBreak = timeForBreak;
+                        runningPage.StartRunning();
+
                         MainFrame.Navigate(runningPage);
                         break;
                     case State.Settings:
@@ -159,11 +162,11 @@ namespace MobMentality
             this.Height = 140;
         }
 
-        private void RunningPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            Left = myWindowPosition.X;
-            Top = myWindowPosition.Y;
-        }
+        //private void RunningPage_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    Left = myWindowPosition.X;
+        //    Top = myWindowPosition.Y;
+        //}
 
         private void MainWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -177,13 +180,13 @@ namespace MobMentality
             }
         }
 
-        private void MainWindow_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (runningPage.IsLoaded)
-            {
-                myWindowPosition = new Point(Left, Top);
-            }
-        }
+        //private void MainWindow_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (runningPage.IsLoaded)
+        //    {
+        //        myWindowPosition = new Point(Left, Top);
+        //    }
+        //}
 
         private void MainWindow_MouseUp(object sender, MouseButtonEventArgs e)
         {

@@ -32,7 +32,7 @@ namespace MobMentality
             timer = new MobTimer();
             timer.TimerUpEvent += Timer_TimerUpEvent;
 
-            this.Loaded += RunningPage_Loaded;
+            //this.Loaded += RunningPage_Loaded;
             MouseEnter += RunningPage_MouseEnter;
             MouseLeave += RunningPage_MouseLeave;
 
@@ -54,7 +54,13 @@ namespace MobMentality
             RunningGrid.RowDefinitions[0].Height = new GridLength(1, GridUnitType.Star);
         }
 
-        private void RunningPage_Loaded(object sender, RoutedEventArgs e)
+        // TODO: Remove dead code.
+        //private void RunningPage_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    StartRunning();
+        //}
+
+        public void StartRunning()
         {
             List<string> driverNavigator = people.DriverNavigator;
 
@@ -78,6 +84,7 @@ namespace MobMentality
         }
 
         #region Events
+        #region Args
         public class TimerUpEventArgs : EventArgs
         {
             public TimerUpEventArgs(bool timeForBreak)
@@ -87,10 +94,14 @@ namespace MobMentality
 
             public bool TimeForBreak { get; }
         }
+        #endregion Args
 
+        #region Handler
         public event EventHandler GoToSettingsEvent;
         public event EventHandler<TimerUpEventArgs> TimerUpEvent;
+        #endregion Handler
 
+        #region meth
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             GoToSettingsEvent?.Invoke(this, EventArgs.Empty);
@@ -114,7 +125,6 @@ namespace MobMentality
         {
             TimerUpEvent?.Invoke(this, e);
         }
-        #endregion
 
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
@@ -148,5 +158,9 @@ namespace MobMentality
             CurrentPersonLabel.Content = people.DriverNavigator[0];
             NextPersonLabel.Content = people.DriverNavigator[1];
         }
+        #endregion meth
+        #endregion Events
+
+
     }
 }

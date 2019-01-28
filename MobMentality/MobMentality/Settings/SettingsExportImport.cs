@@ -5,7 +5,7 @@ using System.Windows;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 
-namespace MobMentality
+namespace MobMentality.Settings
 {
     class SettingsExportImport
     {

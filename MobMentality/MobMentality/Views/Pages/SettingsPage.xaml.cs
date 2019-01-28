@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using MobMentality.Settings;
 
 namespace MobMentality
 {
@@ -84,7 +85,7 @@ namespace MobMentality
             myAppDictionary["BreakCounter"] = myAppDictionary["TurnsTillBreak"];
             RaiseStartMobbing();
         }
-        
+
         private void TimerPlusButton_Click(object sender, RoutedEventArgs e)
         {
             IncDecDictionary("TurnMinutes", true);
@@ -114,27 +115,10 @@ namespace MobMentality
         {
             IncDecDictionary("TurnsTillBreak", false);
         }
-        #endregion UI Click Events
-        
 
         private void AddPersonButton_Click(object sender, RoutedEventArgs e)
         {
             AddPerson();
-        }
-
-        private void AddPerson()
-        {
-            bool success = mobPeople.AddActivePerson(NewPersonTextBox.Text);
-
-            if (success)
-            {
-                ErrorMessageOnAddLabel.Content = "";
-                NewPersonTextBox.Text = "";
-            }
-            else
-            {
-                ErrorMessageOnAddLabel.Content = "* Enter a name not in the list of mobbers";
-            }
         }
 
         private void AddActivePersonButton_Click(object sender, RoutedEventArgs e)
@@ -155,7 +139,6 @@ namespace MobMentality
 
             InactivePeopleItemsControl.PeopleItemsControl.Items.Refresh();
         }
-        #endregion Events
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -198,5 +181,29 @@ namespace MobMentality
         {
             SettingsExportImport.Load(myAppDictionary, mobPeople);
         }
+        #endregion UI Click Events
+
+
+
+
+        private void AddPerson()
+        {
+            bool success = mobPeople.AddActivePerson(NewPersonTextBox.Text);
+
+            if (success)
+            {
+                ErrorMessageOnAddLabel.Content = "";
+                NewPersonTextBox.Text = "";
+            }
+            else
+            {
+                ErrorMessageOnAddLabel.Content = "* Enter a name not in the list of mobbers";
+            }
+        }
+
+
+        #endregion Events
+
+
     }
 }

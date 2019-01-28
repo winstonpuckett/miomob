@@ -8,7 +8,17 @@
              d:DesignHeight="450" d:DesignWidth="800"
              AllowDrop="True">
     <Grid>
-        <Button Name="SetCurrentPersonButton" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" Content="{Binding}" FontSize="24"  PreviewMouseDown="SetCurrentPersonButton_PreviewMouseDown"/> <!--Click="SetCurrentPersonButton_Click"-->
-        <Button Name="SwitchToInactiveStateButton"  Content="x" Width="30" HorizontalAlignment="Right" Click="SwitchActiveStateButton_Click" FontSize="24"/>
+        <Button Name="SetCurrentPersonButton" 
+                HorizontalContentAlignment="Center" 
+                HorizontalAlignment="Stretch" 
+                Content="{Binding}" 
+                FontSize="24"  
+                PreviewMouseDown="SetCurrentPersonButton_PreviewMouseDown"/> <!--Click="SetCurrentPersonButton_Click"-->
+        <Button Name="SwitchToInactiveStateButton"  
+                Content="x" 
+                Width="30" 
+                HorizontalAlignment="Right" 
+                Click="SwitchActiveStateButton_Click" 
+                FontSize="24"/>
     </Grid>
 </UserControl>

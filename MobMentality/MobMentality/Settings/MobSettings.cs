@@ -1,4 +1,4 @@
-﻿namespace MobMentality {
+﻿namespace MobMentality.Settings {
     
     
     // This class allows you to handle specific events on the settings class:

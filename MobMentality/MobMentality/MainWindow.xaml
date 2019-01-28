@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MobMentality"
         mc:Ignorable="d"
-        Title="MainWindow" Height="140" Width="140" Topmost="True" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="NoResize" WindowStyle="None" Icon="icons/logo.png" ShowInTaskbar="False"
+        Title="Mob Mentality" Height="140" Width="140" Topmost="True" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="NoResize" WindowStyle="None" Icon="icons/logo.png" ShowInTaskbar="False"
         Background="Transparent" AllowsTransparency="True">
     <Grid>
         <Frame Name="MainFrame" Content="Bobby was here" NavigationUIVisibility="Hidden" Background="Transparent"/>
