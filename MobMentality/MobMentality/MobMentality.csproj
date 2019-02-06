@@ -83,27 +83,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Settings\Logger.cs" />
+    <Compile Include="Command\RelayCommand.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Settings\MobSettings.cs" />
     <Compile Include="Settings\MobSettings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>MobSettings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\MasterViewModel.cs" />
+    <Compile Include="ViewModels\PeopleValidator.cs" />
+    <Compile Include="ViewModels\TimerConverter.cs" />
+    <Compile Include="ViewModels\TimerValidator.cs" />
     <Compile Include="Views\Pages\RetroPage.xaml.cs">
       <DependentUpon>RetroPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Logic\MobPeople.cs" />
     <Compile Include="Views\Pages\RunningPage.xaml.cs">
       <DependentUpon>RunningPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\SwitchPersonPage.xaml.cs">
       <DependentUpon>SwitchPersonPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Settings\SettingsModel.cs" />
     <Compile Include="Settings\SettingsExportImport.cs" />
     <Page Include="Views\Pages\RetroPage.xaml">
       <SubType>Designer</SubType>
@@ -143,7 +146,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logic\MobTimer.cs" />
     <Compile Include="Views\UserControls\PersonButtonUserControl.xaml.cs">
       <DependentUpon>PersonButtonUserControl.xaml</DependentUpon>
     </Compile>
@@ -210,9 +212,7 @@
   <ItemGroup>
     <Resource Include="icons\pause.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.3.3.2\build\Fody.targets" Condition="Exists('..\packages\Fody.3.3.2\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

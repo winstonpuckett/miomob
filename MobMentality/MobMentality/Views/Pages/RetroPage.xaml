@@ -16,6 +16,5 @@
         </Grid.RowDefinitions>
         <Button Content="Done" Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="213" Height="57" FontSize="36" Click="Button_Click"/>
         <Label Name="DoneButton" Content="Time to retroflect" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="72"/>
-
     </Grid>
 </Page>

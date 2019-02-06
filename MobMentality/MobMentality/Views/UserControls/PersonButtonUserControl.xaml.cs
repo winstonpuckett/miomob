@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MobMentality.ViewModels;
 
 namespace MobMentality.Pages.UserControls
 {
@@ -20,54 +21,30 @@ namespace MobMentality.Pages.UserControls
     /// </summary>
     public partial class PersonButtonUserControl : UserControl
     {
-        // TODO: Remove dead code.
-        private MobPeople mobPeople;
-        private ResourceDictionary myAppDictionary;
-
         public PersonButtonUserControl()
         {
-            myAppDictionary = Application.Current.Resources;
-            mobPeople = myAppDictionary["People"] as MobPeople;
-
             InitializeComponent();
         }
-
-        // TODO: Translate this to up and down arrows next to active people
-        //private void SetCurrentPersonButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    string name = (sender as Button).Content.ToString();
-
-        //    if (mobPeople.ActivePeople.Contains(name))
-        //    {
-        //        mobPeople.RotateToPerson(name);
-        //    }
-        //    else if (mobPeople.InactivePeople.Contains(name))
-        //    {
-        //        mobPeople.SwitchPersonState(name);
-        //    }
-        //}
 
         private void SwitchActiveStateButton_Click(object sender, RoutedEventArgs e)
         {
             string name = SetCurrentPersonButton.Content.ToString();
 
-            mobPeople.RemovePerson(name);
-
-            // TODO: Remove dead code.
-            //if (mobPeople.ActivePeople.Contains(name))
-            //{
-            //    mobPeople.SwitchPersonState(name);
-            //}
-            //else if (mobPeople.InactivePeople.Contains(name))
-            //{
-            //    mobPeople.RemovePerson(name);
-            //}
+            if (Application.Current.MainWindow?.DataContext is MasterViewModel m)
+            {
+                m.RemovePersonCommand.Execute(name);
+            }
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
 
+            StartDragging(e);
+        }
+
+        private void SetCurrentPersonButton_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
             StartDragging(e);
         }
 
@@ -90,16 +67,19 @@ namespace MobMentality.Pages.UserControls
             if (e.Data.GetDataPresent(DataFormats.StringFormat))
             {
                 string dataString = (string)e.Data.GetData(DataFormats.StringFormat);
-                //int dataPosition = mobPeople.ActivePeople.IndexOf(SetCurrentPersonButton.Content.ToString());
-                mobPeople.MoveActivePerson(dataString, SetCurrentPersonButton.Content.ToString());
+
+                if (Application.Current.MainWindow?.DataContext is MasterViewModel context)
+                {
+                    string origin = dataString;
+                    string target = SetCurrentPersonButton.Content.ToString();
+                    List<string> list = new List<string> { origin, target };
+
+                    context.MovePersonCommand.Execute(list);
+                }
 
                 e.Handled = true;
             }
         }
 
-        private void SetCurrentPersonButton_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            StartDragging(e);
-        }
     }
 }

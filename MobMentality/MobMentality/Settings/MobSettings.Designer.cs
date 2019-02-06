@@ -25,59 +25,13 @@ namespace MobMentality.Settings {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("7")]
-        public int TurnMinutes {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ModelJson {
             get {
-                return ((int)(this["TurnMinutes"]));
+                return ((string)(this["ModelJson"]));
             }
             set {
-                this["TurnMinutes"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public int BreakMinutes {
-            get {
-                return ((int)(this["BreakMinutes"]));
-            }
-            set {
-                this["BreakMinutes"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
-        public int TurnsTillBreak {
-            get {
-                return ((int)(this["TurnsTillBreak"]));
-            }
-            set {
-                this["TurnsTillBreak"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection ActivePeople {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["ActivePeople"]));
-            }
-            set {
-                this["ActivePeople"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection InactivePeople {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["InactivePeople"]));
-            }
-            set {
-                this["InactivePeople"] = value;
+                this["ModelJson"] = value;
             }
         }
     }

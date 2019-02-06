@@ -3,33 +3,33 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using MobMentality.ViewModels;
 
 namespace MobMentality
 {
     /// <summary>
     /// Interaction logic for SwitchPersonPage.xaml
     /// </summary>
-    public partial class SwitchPersonPage : Page
+    public partial class SwitchPersonPage
     {
-        // TODO: Add skip button
-        private ResourceDictionary myAppDictionary;
         private RetroPage retroPage;
-        private MobPeople people;
-
-        public bool TimeForBreak { get; set; }
 
         public SwitchPersonPage()
         {
             InitializeComponent();
 
             this.Loaded += SwitchPersonPage_Loaded;
-            
-            myAppDictionary = Application.Current.Resources;
+
             retroPage = new RetroPage();
             retroPage.DoneReflectingEvent += RetroPage_DoneReflectingEvent;
 
-            people = myAppDictionary["People"] as MobPeople;
+            //people = myAppDictionary["People"] as MobPeople;
         }
+
+        #region Events
+
+        public event EventHandler GoToSettingsEvent;
+        public event EventHandler StartMobbingEvent;
 
         private void RetroPage_DoneReflectingEvent(object sender, EventArgs e)
         {
@@ -40,7 +40,7 @@ namespace MobMentality
 
         private void SwitchPersonPage_Loaded(object sender, RoutedEventArgs e)
         {
-            if (TimeForBreak)
+            if (DataContext is MasterViewModel m && m.TimeForBreak)
             {
                 RetroFrame.HorizontalAlignment = HorizontalAlignment.Stretch;
                 RetroFrame.VerticalAlignment = VerticalAlignment.Stretch;
@@ -50,10 +50,6 @@ namespace MobMentality
             UpdateDriverNavigatorLabels();
         }
 
-        #region Events
-        public event EventHandler GoToSettingsEvent;
-        public event EventHandler StartMobbingEvent;
-
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             GoToSettingsEvent?.Invoke(this, EventArgs.Empty);
@@ -61,20 +57,28 @@ namespace MobMentality
 
         private void ContinueMobbingButton_Click(object sender, RoutedEventArgs e)
         {
+            if (DataContext is MasterViewModel m)
+            {
+                m.ResetTimerCommand.Execute(null);
+                m.StartTimerCommand.Execute(null);
+            }
+
             StartMobbingEvent?.Invoke(this, EventArgs.Empty);
         }
-        #endregion
+
 
         private void BackPersonButton_Click(object sender, RoutedEventArgs e)
         {
-            if (TimeForBreak)
+            if (DataContext is MasterViewModel m)
             {
-                TimeForBreak = !TimeForBreak;
-
-            }
-            else
-            {
-                people.LastPerson();
+                if (m.TimeForBreak)
+                {
+                    m.TimeForBreak = false;
+                }
+                else
+                {
+                    m.LastPersonCommand.Execute(null);
+                }
             }
 
             UpdateDriverNavigatorLabels();
@@ -82,32 +86,41 @@ namespace MobMentality
 
         private void UpdateDriverNavigatorLabels()
         {
-            if (TimeForBreak)
+            if (DataContext is MasterViewModel m)
             {
-                DriverLabel.Content = "It's time for a break!";
-                NavigatorLabel.Content = $"Next driver is {people.DriverNavigator[0]}";
-                ContinueMobbingButton.Content = "Take Break";
+                if (m.TimeForBreak)
+                {
+                    DriverLabel.Content = "It's time for a break!";
+                    NavigatorLabel.Content = $"Next driver is {m.Driver}";
+                    ContinueMobbingButton.Content = "Take Break";
+                }
+                else
+                {
+                    DriverLabel.Content = $"{m.Driver}, please take control of the keyboard";
+                    NavigatorLabel.Content = $"{m.Navigator}, get ready to navigate";
+                    ContinueMobbingButton.Content = "Continue Mobbing";
+                }
             }
-            else
-            {
-                DriverLabel.Content = $"{people.DriverNavigator[0]}, please take control of the keyboard";
-                NavigatorLabel.Content = $"{people.DriverNavigator[1]}, get ready to navigate";
-                ContinueMobbingButton.Content = "Continue Mobbing";
-            }
+
         }
 
         private void ForwardPersonButton_Click(object sender, RoutedEventArgs e)
         {
-            if (TimeForBreak)
+            if (DataContext is MasterViewModel m)
             {
-                TimeForBreak = !TimeForBreak;
+                if (m.TimeForBreak)
+                {
+                    m.TimeForBreak = false;
+                }
+                else
+                {
+                    m.NextPersonCommand.Execute(null);
+                }
             }
-            else
-            {
-                people.NextPerson();
-            }
-            
+
             UpdateDriverNavigatorLabels();
         }
+
+        #endregion
     }
 }

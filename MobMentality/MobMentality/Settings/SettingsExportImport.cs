@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using Microsoft.Win32;
+using MobMentality.ViewModels;
 using Newtonsoft.Json;
 
 namespace MobMentality.Settings
 {
     class SettingsExportImport
     {
-        public static void Save(SettingsModel model)
+        public static void Save(object model)
         {
             string jsonModel = JsonConvert.SerializeObject(model);
 
@@ -21,7 +22,7 @@ namespace MobMentality.Settings
                 File.WriteAllText(saveDialog.FileName, jsonModel);
             }
         }
-        public static void Load(ResourceDictionary myAppDictionary, MobPeople mobPeople)
+        public static void Load()
         {
             try
             {
@@ -33,20 +34,11 @@ namespace MobMentality.Settings
 
                     string content = File.ReadAllText(path);
 
-                    SettingsModel model = JsonConvert.DeserializeObject<SettingsModel>(content);
-
-                    myAppDictionary["TurnMinutes"] = model.TurnMinutes;
-                    myAppDictionary["BreakMinutes"] = model.BreakMinutes;
-                    myAppDictionary["TurnsTillBreak"] = model.BreakTurns;
-                    mobPeople.ActivePeople.Clear();
-                    foreach (string name in model.Mobbers)
-                    {
-                        mobPeople.AddActivePerson(name);
-                    }
+                    Application.Current.MainWindow.DataContext = JsonConvert.DeserializeObject<MasterViewModel>(content);
                 }
 
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 MessageBox.Show("File wasn't compatible");
             }

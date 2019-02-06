@@ -6,20 +6,6 @@
              StartupUri="MainWindow.xaml"
              >
     <Application.Resources>
-        <!--Time Resources-->
-        <clr:Int16 x:Key="TurnMinutes">5</clr:Int16>
-        <clr:Int16 x:Key="BreakMinutes">5</clr:Int16>
-        <clr:Int16 x:Key="TurnsTillBreak">1</clr:Int16>
-        <clr:Int16 x:Key="BreakCounter">0</clr:Int16>
-        <clr:Int16 x:Key="TimeCounter">0</clr:Int16>
-        <!--TODO: This is used to format TimeCounter. The real solution would be 
-            using a converter in XAML. Working that out was taking too long,
-            but if this ever needs to be changed, refactor that way-->
-        <clr:String x:Key="TimeCounterFriendly">0:00</clr:String>
-        
-        <!--People Resources-->
-        <local:MobPeople x:Key="People" />
-
         <!--Global Styling-->
         <Style TargetType="{x:Type Label}">
             <Setter Property="Foreground" Value="#F7F9F9"/>
@@ -27,8 +13,6 @@
         <Style TargetType="{x:Type Button}">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background"  Value="Transparent"/>
-            <!--<Setter Property="BorderBrush" Value="White"/>
-            <Setter Property="BorderThickness" Value="2"/>-->
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">

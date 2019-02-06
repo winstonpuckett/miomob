@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800"
              >
     <Grid Drop="PeopleItemsControl_Drop" AllowDrop="True">
-        <!--Grid didn't allow people to be dropped directly. Added CatchPeopleButton to catch effects-->
+        <!--Grid didn't allow people to be dropped directly. Added rectangle to catch effects-->
         <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="#00FFFFFF"/>
         <ItemsControl Name="PeopleItemsControl" BorderBrush="White" BorderThickness="0.1" ItemsSource="{Binding}" VerticalAlignment="Stretch">
             <ItemsControl.ItemTemplate>
@@ -17,12 +17,5 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <!--<ItemsControl Name="PeopleItemsControl" BorderBrush="White" BorderThickness="0.1" ItemsSource="{Binding}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <local:PersonButtonUserControl />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>-->
     </Grid>
 </UserControl>

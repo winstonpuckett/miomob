@@ -13,12 +13,12 @@
                 HorizontalAlignment="Stretch" 
                 Content="{Binding}" 
                 FontSize="24"  
-                PreviewMouseDown="SetCurrentPersonButton_PreviewMouseDown"/> <!--Click="SetCurrentPersonButton_Click"-->
+                PreviewMouseDown="SetCurrentPersonButton_PreviewMouseDown"/>
         <Button Name="SwitchToInactiveStateButton"  
                 Content="x" 
                 Width="30" 
                 HorizontalAlignment="Right" 
-                Click="SwitchActiveStateButton_Click" 
-                FontSize="24"/>
+                Click="SwitchActiveStateButton_Click"
+                FontSize="24"/><!--Click="SwitchActiveStateButton_Click"--> 
     </Grid>
 </UserControl>

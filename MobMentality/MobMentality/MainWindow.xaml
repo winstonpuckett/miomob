@@ -4,10 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MobMentality"
+        xmlns:viewModels="clr-namespace:MobMentality.ViewModels"
         mc:Ignorable="d"
-        Title="Mob Mentality" Height="140" Width="140" Topmost="True" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="NoResize" WindowStyle="None" Icon="icons/logo.png" ShowInTaskbar="False"
+        Title="Mob Mentality" Height="101" Width="101" Topmost="True" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="NoResize" WindowStyle="None" Icon="icons/logo.png" ShowInTaskbar="False"
         Background="Transparent" AllowsTransparency="True">
+
+    <Window.DataContext>
+        <viewModels:MasterViewModel/>
+    </Window.DataContext>
+
     <Grid>
-        <Frame Name="MainFrame" Content="Bobby was here" NavigationUIVisibility="Hidden" Background="Transparent"/>
+        <Frame Name="MainFrame" Content="Bobby was here" NavigationUIVisibility="Hidden" Background="Transparent" Navigating="MainFrame_OnNavigating"/>
     </Grid>
 </Window>

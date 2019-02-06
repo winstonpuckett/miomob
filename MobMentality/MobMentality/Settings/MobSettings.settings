@@ -1,20 +1,8 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MobMentality" GeneratedClassName="MobSettings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MobMentality.Settings" GeneratedClassName="MobSettings">
   <Profiles />
   <Settings>
-    <Setting Name="TurnMinutes" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">7</Value>
-    </Setting>
-    <Setting Name="BreakMinutes" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">10</Value>
-    </Setting>
-    <Setting Name="TurnsTillBreak" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3</Value>
-    </Setting>
-    <Setting Name="ActivePeople" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="InactivePeople" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="ModelJson" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

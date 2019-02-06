@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,26 +13,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MobMentality.ViewModels;
 
 namespace MobMentality.Pages.UserControls
 {
     /// <summary>
     /// Interaction logic for PersonListUserControl.xaml
     /// </summary>
-    public partial class PersonListUserControl : UserControl
+    public partial class PersonListUserControl
     {
-        private MobPeople mobPeople;
-        private ResourceDictionary myAppDictionary;
-
         public PersonListUserControl()
         {
-            myAppDictionary = Application.Current.Resources;
-            mobPeople = myAppDictionary["People"] as MobPeople;
-
             InitializeComponent();
-            
         }
-        
+
         private void PeopleItemsControl_Drop(object sender, DragEventArgs e)
         {
             base.OnDrop(e);
@@ -40,31 +35,18 @@ namespace MobMentality.Pages.UserControls
             {
                 string dataString = (string)e.Data.GetData(DataFormats.StringFormat);
 
-                var s = sender as Grid;
-                var parent = s.Parent as PersonListUserControl;
+                if (Application.Current.MainWindow?.DataContext is MasterViewModel context)
+                {
+                    if (DataContext is ObservableCollection<string> thisList)
+                    {
+                        if (thisList.Contains(dataString))
+                        {
+                            context.MovePersonCommand.Execute(new List<string> { dataString, thisList.Last() });
+                            return;
+                        }
+                    }
 
-                if (parent.Name == "ActivePeopleItemsControl")
-                {
-                    if (mobPeople.ActivePeople.Contains(dataString))
-                    {
-                        mobPeople.RemovePerson(dataString);
-                        mobPeople.AddActivePerson(dataString);
-                    }
-                    else
-                    {
-                        mobPeople.SwitchPersonState(dataString);
-                    }
-                }
-                else if (parent.Name == "InactivePeopleItemsControl")
-                {
-                    if (mobPeople.InactivePeople.Contains(dataString))
-                    {
-                        mobPeople.InactivePeople.Move(mobPeople.InactivePeople.IndexOf(dataString), mobPeople.InactivePeople.Count - 1);
-                    }
-                    else
-                    {
-                        mobPeople.SwitchPersonState(dataString);
-                    }
+                    context.SwitchPersonStateCommand.Execute(dataString);
                 }
             }
         }

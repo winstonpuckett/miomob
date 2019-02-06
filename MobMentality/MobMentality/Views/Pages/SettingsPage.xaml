@@ -5,11 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MobMentality"
       xmlns:usercontrols="clr-namespace:MobMentality.Pages.UserControls"
-      mc:Ignorable="d" 
-      d:DesignHeight="1080" d:DesignWidth="1920"
-      Title="Settings" Background="#20171A" Opacity=".98">
+      mc:Ignorable="d" d:DesignHeight="1080" d:DesignWidth="1920"
+      Title="Settings" Background="#20171A" Opacity=".95" >
 
     <Grid>
+        <!--#region Meta-->
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
@@ -24,8 +24,11 @@
             <ColumnDefinition Width=".5*"/>
             <ColumnDefinition Width=".5*"/>
         </Grid.ColumnDefinitions>
+        <!--#endregion Meta-->
+
+        <!--#region Timer-->
         <Label Content="Timer" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom"  FontSize="72"/>
-        <Label Content="Breaks" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Bottom"  FontSize="72" />
+        <Label Content="Minutes per turn" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Center" FontSize="36"/>
 
         <Grid Grid.Row="1" Margin="10">
             <Grid.ColumnDefinitions>
@@ -33,64 +36,70 @@
                 <ColumnDefinition Width="0.7*"/>
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
-            <Label Name="TimerLabel" Grid.Column="1" Content="{DynamicResource TurnMinutes}" HorizontalAlignment="Center"  VerticalAlignment="Center"  FontSize="72"/>
-            <Button Name="TimerMinusButton"  Content="-" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="72" Click="TimerMinusButton_Click"/>
-            <Button Name="TimerPlusButton" Grid.Column="2" Content="+" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="72" Click="TimerPlusButton_Click" />
+            <Label Name="TimerLabel" Grid.Column="1" Content="{Binding TurnMinutes}" HorizontalAlignment="Center"  VerticalAlignment="Center"  FontSize="72"/>
+            <Button Name="TimerMinusButton"  Content="-" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="72" Command="{Binding DecrementCommand}" CommandParameter="TurnMinutes"/>
+            <Button Name="TimerPlusButton" Grid.Column="2" Content="+" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="72" Command="{Binding IncrementCommand}" CommandParameter="TurnMinutes"/>
         </Grid>
+        <!--#endregion-->
 
+        <!--#region Breaks-->
+        <Label Content="Breaks" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Bottom"  FontSize="72" />
 
+        <Label Content="Minutes per break" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36" />
         <Grid Grid.Row="3" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="0.7*"/>
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
-            <Label x:Name="BreakMinutesLabel" Grid.Column="1" Content="{DynamicResource BreakMinutes}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Stretch" FontSize="72" />
-            <Button x:Name="BreakMinutesMinusButton" Grid.Column="0" Content="-" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="72" Click="BreakMinutesPlusButton_Click"/>
-            <Button x:Name="BreakMinutesPlusButton" Grid.Column="2" Content="+" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" FontSize="72" Click="BreakMinutesPlusButton_Click_1"/>
+            <Label x:Name="BreakMinutesLabel" Grid.Column="1" Content="{Binding BreakMinutes}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Stretch" FontSize="72" />
+            <Button x:Name="BreakMinutesMinusButton" Grid.Column="0" Content="-" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="72" Command="{Binding DecrementCommand}" CommandParameter="BreakMinutes"/>
+            <Button x:Name="BreakMinutesPlusButton" Grid.Column="2" Content="+" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" FontSize="72" Command="{Binding IncrementCommand}" CommandParameter="BreakMinutes"/>
         </Grid>
 
-
-
+        <Label Name="EveryXMinLabel" Grid.Row="4" Grid.Column="1" Content="Turns until break" HorizontalAlignment="Left" VerticalAlignment="Center"  FontSize="36" />
         <Grid Grid.Row="4" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="0.7*"/>
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
-            <Label x:Name="TurnsTillBreakLabel" Grid.Column="1" Content="{DynamicResource TurnsTillBreak}" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="72" />
-            <Button x:Name="TurnsTillBreakMinusButton" Content="-" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="72" Click="TurnsTillBreakMinusButton_Click"/>
-            <Button x:Name="TurnsTillBreakPlusButton" Grid.Column="2" Content="+" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="72" Click="TurnsTillBreakPlusButton_Click"/>
+            <Label x:Name="TurnsTillBreakLabel" Grid.Column="1" Content="{Binding TurnsTillBreak}" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="72" />
+            <Button x:Name="TurnsTillBreakMinusButton" Content="-" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="72" Command="{Binding DecrementCommand}" CommandParameter="TurnsTillBreak"/>
+            <Button x:Name="TurnsTillBreakPlusButton" Grid.Column="2" Content="+" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="72" Command="{Binding IncrementCommand}" CommandParameter="TurnsTillBreak"/>
         </Grid>
-        
-        <Label Content="Minutes per break" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="36" />
-        <Label Name="EveryXMinLabel" Grid.Row="4" Grid.Column="1" Content="Turns until break" HorizontalAlignment="Left" VerticalAlignment="Center"  FontSize="36" />
-        <Button Name="StartMobbingButton" Grid.Row="5" Grid.ColumnSpan="4" Content="Start Mobbing" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" FontSize="48" Margin="10" Click="StartMobbingButton_Click" />
-        <Label Content="Minutes per turn" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Center" FontSize="36"/>
-        <usercontrols:PersonListUserControl x:Name="ActivePeopleItemsControl"  Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" />
-        
-        <usercontrols:PersonListUserControl x:Name="InactivePeopleItemsControl"  Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" />
-        
-        <Label Content="Active Mobbers" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="22"/>
-        <StackPanel Margin="0,0,0,8" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
-            <Button Name="RandomizeButton"  FontSize="30" Content=" ⚄ " Click="RandomizeButton_Click"  />
-            <Button Name="NextPersonButton" FontFamily="Marlett" FontSize="30" Content="5" Click="NextPersonButton_Click"/>
-            <Button Name="LastPersonButton" FontFamily="Marlett" FontSize="30" Content="6" Click="LastPersonButton_Click"/>
-        </StackPanel>
-        <Label Content="Inactive Mobbers" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="22"/>
-        <Button Name="AddPersonButton" Panel.ZIndex="1" Content="+" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top" Width="29" FontSize="20" Height="50" Click="AddPersonButton_Click" />
+        <!--#endregion-->
 
-        <TextBox Name="NewPersonTextBox" Grid.Row="4" Grid.Column="2" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Height="50" TextWrapping="Wrap"  VerticalAlignment="Top"  FontSize="24" >
-            <TextBox.InputBindings>
-                <KeyBinding Command="" Key="Enter"/>
-            </TextBox.InputBindings>
-        </TextBox>
-        <Label Name="ErrorMessageOnAddLabel" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Foreground="LightPink" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16"/>
-        <Button Content="X"  Grid.Row="0" Grid.Column="4" VerticalContentAlignment="Center" HorizontalAlignment="Right" Height="46" VerticalAlignment="Top" Width="44" FontSize="20" Click="Button_Click" Panel.ZIndex="-1"/>
+        <!--#region Active Mobbers-->
+        <Label Content="Active Mobbers" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="22"/>
+        <usercontrols:PersonListUserControl x:Name="ActivePeopleItemsControl"  Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" DataContext="{Binding ActivePeople}" />
+
+        <StackPanel Margin="0,0,0,8" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
+            <Button Name="RandomizeButton"  FontSize="30" Content=" ⚄ " Command="{Binding RandomizeActiveCommand}"/>
+            <Button Name="NextPersonButton" FontFamily="Marlett" FontSize="30" Content="5" Command="{Binding NextPersonCommand}"/>
+            <Button Name="LastPersonButton" FontFamily="Marlett" FontSize="30" Content="6" Command="{Binding LastPersonCommand}"/>
+        </StackPanel>
+
+        <TextBox Name="NewPersonTextBox" Grid.Row="4" Grid.Column="2" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Height="50" TextWrapping="Wrap"  VerticalAlignment="Top"  FontSize="24" />
+        <Button Name="AddPersonButton" Panel.ZIndex="1" Content="+" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top" Width="29" FontSize="20" Height="50" Click="AddPersonButton_OnClick" />
+        <!--#endregion-->
+
+        <!--#region Inactive Mobbers-->
+        <Label Content="Inactive Mobbers" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="22"/>
+        <usercontrols:PersonListUserControl x:Name="InactivePeopleItemsControl"  Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" DataContext="{Binding InactivePeople}" />
+        <!--#endregion-->
+
+        <!--#region Save/Load-->
         <StackPanel Grid.Column="3" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Orientation="Horizontal">
             <Button Name="SaveButton" FontFamily="Wingdings" FontSize="30" Content="&lt;"  Height="50" Width="50" Click="SaveButton_Click"/>
             <Button Name="LoadButton" FontFamily="Wingdings" FontSize="30" Content="1"  Height="50" Width="50" Click="LoadButton_Click"/>
         </StackPanel>
-        
+        <!--#endregion-->
+
+        <!--#region Start / Quit-->
+        <Button Content="X"  Grid.Row="0" Grid.Column="3" VerticalContentAlignment="Center" HorizontalAlignment="Right" Height="46" VerticalAlignment="Top" Width="44" FontSize="20" Click="Button_Click" Panel.ZIndex="-1"/>
+        <Button Name="StartMobbingButton" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4" Content="Start Mobbing" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" FontSize="48" Margin="10" Click="StartMobbingButton_Click" />
+        <!--#endregion Start / Quit-->
+
     </Grid>
 </Page>

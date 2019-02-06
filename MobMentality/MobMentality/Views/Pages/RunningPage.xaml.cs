@@ -12,37 +12,36 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MobMentality.ViewModels;
 
 namespace MobMentality
 {
     /// <summary>
     /// Interaction logic for SmallView.xaml
     /// </summary>
-    public partial class RunningPage : Page
+    public partial class RunningPage
     {
-        private MobTimer timer;
-        private MobPeople people;
-        private ResourceDictionary myAppDictionary;
-        public bool TimeForBreak { get; set; }
+        #region Ctor
 
         public RunningPage()
         {
             InitializeComponent();
 
-            timer = new MobTimer();
-            timer.TimerUpEvent += Timer_TimerUpEvent;
-
-            //this.Loaded += RunningPage_Loaded;
             MouseEnter += RunningPage_MouseEnter;
             MouseLeave += RunningPage_MouseLeave;
-
-            myAppDictionary = Application.Current.Resources;
-
-            people = myAppDictionary["People"] as MobPeople;
-
-            Int16 time = (Int16)myAppDictionary["TimeCounter"];
-            myAppDictionary["TimeCounterFriendly"] = MobTimer.ConvertTime((Int16)(time));
         }
+
+        #endregion
+
+        #region Events
+
+        #region Handler
+
+        public event EventHandler GoToSettingsEvent;
+
+        #endregion
+        
+        #region UI
 
         private void RunningPage_MouseLeave(object sender, MouseEventArgs e)
         {
@@ -54,113 +53,46 @@ namespace MobMentality
             RunningGrid.RowDefinitions[0].Height = new GridLength(1, GridUnitType.Star);
         }
 
-        // TODO: Remove dead code.
-        //private void RunningPage_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    StartRunning();
-        //}
-
-        public void StartRunning()
-        {
-            List<string> driverNavigator = people.DriverNavigator;
-
-            if (TimeForBreak)
-            {
-                myAppDictionary["TimeCounter"] = (Int16)((Int16)myAppDictionary["BreakMinutes"] * 60);
-
-                CurrentPersonLabel.Content = "Break time";
-                NextPersonLabel.Content = $"Next: {driverNavigator[0]}";
-            }
-            else
-            {
-                myAppDictionary["TimeCounter"] = (Int16)((Int16)myAppDictionary["TurnMinutes"] * 60);
-
-                CurrentPersonLabel.Content = driverNavigator[0];
-                NextPersonLabel.Content = driverNavigator[1];
-            }
-
-            timer.ResetTimer(TimeForBreak);
-            timer.StartTimer();
-        }
-
-        #region Events
-        #region Args
-        public class TimerUpEventArgs : EventArgs
-        {
-            public TimerUpEventArgs(bool timeForBreak)
-            {
-                TimeForBreak = timeForBreak;
-            }
-
-            public bool TimeForBreak { get; }
-        }
-        #endregion Args
-
-        #region Handler
-        public event EventHandler GoToSettingsEvent;
-        public event EventHandler<TimerUpEventArgs> TimerUpEvent;
-        #endregion Handler
-
-        #region meth
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             GoToSettingsEvent?.Invoke(this, EventArgs.Empty);
         }
-
-        private void Timer_TimerUpEvent(object sender, MobTimer.TimerUpEventArgs e)
-        {
-            // If it was just a break, the next driver is already there
-            if (!TimeForBreak)
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    people.NextPerson();
-                });
-            }
-            
-            RaiseTimerUp(new TimerUpEventArgs(e.TimeForBreak));
-        }
-
-        protected virtual void RaiseTimerUp(TimerUpEventArgs e)
-        {
-            TimerUpEvent?.Invoke(this, e);
-        }
-
+        
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
-            if (timer.IsRunning)
+            if (DataContext is MasterViewModel m)
             {
-                timer.PauseTimer();
-                PauseButtonImage.Source = new BitmapImage(new Uri(@"/icons/play.png", UriKind.Relative));
-            }
-            else
-            {
-                timer.StartTimer();
-                PauseButtonImage.Source = new BitmapImage(new Uri(@"/icons/pause.png", UriKind.Relative));
+                if (m.Timer.Enabled)
+                {
+                    m.PauseTimerCommand.Execute(null);
+                    if (sender is Button b)
+                    {
+                        b.Content = "4";
+                    }
+                }
+                else
+                {
+                    m.StartTimerCommand.Execute(null);
+                    if (sender is Button b)
+                    {
+                        b.Content = ";";
+                    }
+                }
             }
         }
 
         private void SkipDriverButton_Click(object sender, RoutedEventArgs e)
         {
-            people.NextPerson();
-
-            if (timer.IsRunning)
+            if (DataContext is MasterViewModel m)
             {
-                timer.ResetTimer(false);
-                timer.StartTimer();
+                m.ResetTimerCommand.Execute(null);
+                m.NextPersonCommand.Execute(null);
+                m.StartTimerCommand.Execute(null);
             }
-            else
-            {
-                timer.ResetTimer(false);
-            }
-            
-
-            CurrentPersonLabel.Content = people.DriverNavigator[0];
-            NextPersonLabel.Content = people.DriverNavigator[1];
         }
-        #endregion meth
-        #endregion Events
 
-
+        #endregion
+        
+        #endregion
     }
 }
