@@ -48,12 +48,6 @@ namespace MobMentality.ViewModels
             RandomizeActiveCommand = new RelayCommand<object>((e) => { PeopleValidator.RandomizeActive(ActivePeople); });
         }
 
-        private void ActivePeople_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            Driver = (ActivePeople.Count > 0) ? ActivePeople[0] : "";
-
-            Navigator = (ActivePeople.Count > 1) ? ActivePeople[1] : "";
-        }
 
         #endregion
 
@@ -99,6 +93,7 @@ namespace MobMentality.ViewModels
                 OnPropertyChanged(nameof(Driver));
             }
         }
+
         private string _navigator;
         public string Navigator
         {
@@ -128,12 +123,18 @@ namespace MobMentality.ViewModels
         [JsonIgnore]
         public RelayCommand<string> RotateToPersonCommand { get; set; }
         [JsonIgnore]
-        public RelayCommand<object> NextPersonCommand { get; set; } //RelayCommand needs type... Does nothing
+        public RelayCommand<object> NextPersonCommand { get; set; }
         [JsonIgnore]
-        public RelayCommand<object> LastPersonCommand { get; set; } //RelayCommand needs type... Does nothing
+        public RelayCommand<object> LastPersonCommand { get; set; }
         [JsonIgnore]
-        public RelayCommand<object> RandomizeActiveCommand { get; set; } //RelayCommand needs type... Does nothing
-                                                                         //TODO: Make RelayCommand's Type optional
+        public RelayCommand<object> RandomizeActiveCommand { get; set; }
+
+        private void ActivePeople_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            Driver = (ActivePeople.Count > 0) ? ActivePeople[0] : "";
+
+            Navigator = (ActivePeople.Count > 1) ? ActivePeople[1] : "";
+        }
 
         #endregion
 
@@ -152,7 +153,7 @@ namespace MobMentality.ViewModels
             StartTimerCommand = new RelayCommand<object>((e) => { TimerValidator.StartTimer(Timer); });
             PauseTimerCommand = new RelayCommand<object>((e) => { TimerValidator.PauseTimer(Timer); });
             ResetTimerCommand = new RelayCommand<object>((e) => { TimerValidator.ResetTimer(this); });
-            ResetBreaksCommand = new RelayCommand<object>((e) => { TimerValidator.ResetBreaks(this);});
+            ResetBreaksCommand = new RelayCommand<object>((e) => { TimerValidator.ResetBreaks(this); });
         }
 
         #endregion
@@ -254,7 +255,7 @@ namespace MobMentality.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        
+
         #endregion
     }
 }

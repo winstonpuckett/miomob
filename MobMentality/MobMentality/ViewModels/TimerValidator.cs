@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -69,7 +70,7 @@ namespace MobMentality.ViewModels
 
         public static void ResetBreaks(MasterViewModel model)
         {
-            model.TurnsLeft = model.TurnsTillBreak + 1;
+            model.TurnsLeft = model.TurnsTillBreak;
             model.TimeForBreak = false;
         }
 

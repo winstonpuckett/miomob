@@ -23,11 +23,8 @@ namespace MobMentality
     /// <summary>
     /// Interaction logic for BigView.xaml
     /// </summary>
-    public partial class SettingsPage : Page
+    public partial class SettingsPage
     {
-        //private ResourceDictionary myAppDictionary;
-        //private MobPeople mobPeople;
-
         public SettingsPage()
         {
             InitializeComponent();
@@ -50,8 +47,8 @@ namespace MobMentality
         {
             if (DataContext is MasterViewModel m)
             {
-                m.ResetTimerCommand.Execute(null);
                 m.ResetBreaksCommand.Execute(null);
+                m.ResetTimerCommand.Execute(null);
                 m.StartTimerCommand.Execute(null);
             }
 
@@ -62,82 +59,17 @@ namespace MobMentality
 
         private void StartMobbingButton_Click(object sender, RoutedEventArgs e)
         {
-            //// TODO: This line makes sure that the MobTimer uses the correct BreakCounter value the first time. It belongs somewhere else
-            //myAppDictionary["BreakCounter"] = myAppDictionary["TurnsTillBreak"];
             RaiseStartMobbing();
         }
-
-        //private void TimerPlusButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    //IncDecDictionary("TurnMinutes", true);
-        //}
-
-        //private void TimerMinusButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    IncDecDictionary("TurnMinutes", false);
-        //}
-
-        //private void BreakMinutesPlusButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    IncDecDictionary("BreakMinutes", false);
-        //}
-
-        //private void BreakMinutesPlusButton_Click_1(object sender, RoutedEventArgs e)
-        //{
-        //    IncDecDictionary("BreakMinutes", true);
-        //}
-
-        //private void TurnsTillBreakPlusButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    IncDecDictionary("TurnsTillBreak", true);
-        //}
-
-        //private void TurnsTillBreakMinusButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    IncDecDictionary("TurnsTillBreak", false);
-        //}
-
-        //private void AddPersonButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    AddPerson();
-        //}
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
 
-        private void NextPersonButton_Click(object sender, RoutedEventArgs e)
-        {
-            //mobPeople.NextPerson();
-        }
-
-        private void LastPersonButton_Click(object sender, RoutedEventArgs e)
-        {
-            //mobPeople.LastPerson();
-        }
-
-        private void RandomizeButton_Click(object sender, RoutedEventArgs e)
-        {
-            //mobPeople.RandomizeActive();
-        }
-
+        
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-
-
-            //List<string> mobbers = new List<string>();
-            //mobbers.AddRange(mobPeople.ActivePeople);
-            //mobbers.AddRange(mobPeople.InactivePeople);
-
-            //SettingsModel currentSettings = new SettingsModel
-            //{
-            //    Mobbers = mobbers,
-            //    TurnMinutes = (Int16)myAppDictionary["TurnMinutes"],
-            //    BreakMinutes = (Int16)myAppDictionary["BreakMinutes"],
-            //    BreakTurns = (Int16)myAppDictionary["TurnsTillBreak"]
-            //};
-
             SettingsExportImport.Save(DataContext);
         }
 
@@ -147,23 +79,7 @@ namespace MobMentality
         }
 
         #endregion UI Click Events
-
-        //private void AddPerson()
-        //{
-        //bool success = mobPeople.AddActivePerson(NewPersonTextBox.Text);
-
-        //if (success)
-        //{
-        //    ErrorMessageOnAddLabel.Content = "";
-        //    NewPersonTextBox.Text = "";
-        //}
-        //else
-        //{
-        //    ErrorMessageOnAddLabel.Content = "* Enter a name not in the list of mobbers";
-        //}
-        //}
-
-
+        
         #endregion Events
 
         private void AddPersonButton_OnClick(object sender, RoutedEventArgs e)
