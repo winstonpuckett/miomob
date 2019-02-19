@@ -1,24 +1,10 @@
-﻿using MobMentality.Pages;
-using MobMentality.Settings;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using MobMentality.Settings;
 using MobMentality.ViewModels;
 using Newtonsoft.Json;
+using System;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace MobMentality
 {
@@ -35,11 +21,13 @@ namespace MobMentality
         {
             InitializeComponent();
             this.Topmost = true;
+            this.Loaded += MainWindow_Loaded;
             this.Closing += MainWindow_Closing;
             this.MouseLeftButtonDown += MainWindow_MouseLeftButtonDown;
             this.MouseEnter += MainWindow_MouseEnter;
             this.MouseLeave += MainWindow_MouseLeave;
             this.DataContextChanged += MainWindow_DataContextChanged;
+            this.SizeChanged += MainWindow_SizeChanged;
 
             InitializeSession();
             InitializePages();
@@ -47,32 +35,22 @@ namespace MobMentality
             SwitchWindow(State.Settings);
         }
 
-        private void MainWindow_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (DataContext is null ||
-                _runningPage is null ||
-                _settingsPage is null ||
-                _switchPersonPage is null) return;
-
-            if (!(DataContext is MasterViewModel m)) return;
-
-            m.TimerUp += MOnTimerUp;
-
-            _runningPage.DataContext = this.DataContext;
-            _settingsPage.DataContext = this.DataContext;
-            _switchPersonPage.DataContext = this.DataContext;
-        }
-
-        private void MOnTimerUp(object sender, EventArgs e)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                if (DataContext is MasterViewModel m)
-                    SwitchWindow(State.SwitchPerson);
-            });
-        }
-
         #region Initialize
+
+        private void InitializeSession()
+        {
+            string jsonSettings = MobSettings.Default.ModelJson;
+
+            if (string.IsNullOrWhiteSpace(jsonSettings)) return;
+
+            if (JsonConvert.DeserializeObject<MasterViewModel>(jsonSettings) is MasterViewModel m)
+            {
+                DataContext = m;
+
+                m.TimerUp += MOnTimerUp;
+            }
+        }
+
         private void InitializePages()
         {
             _runningPage = new RunningPage();
@@ -88,24 +66,16 @@ namespace MobMentality
             _switchPersonPage.StartMobbingEvent += SwitchPersonPage_StartMobbingEvent;
             _switchPersonPage.DataContext = this.DataContext;
         }
-
-        private void InitializeSession()
-        {
-            string JsonSettings = MobSettings.Default.ModelJson;
-
-            if (string.IsNullOrWhiteSpace(JsonSettings)) return;
-
-            if (JsonConvert.DeserializeObject<MasterViewModel>(JsonSettings) is MasterViewModel m)
-            {
-                DataContext = m;
-                
-                m.TimerUp += MOnTimerUp;
-            }
-        }
-
+        
         #endregion
 
         #region Methods
+
+        private void SetWindowSize()
+        {
+            this.Width = 101;
+            this.Height = 101;
+        }
 
         private void SwitchWindow(State state)
         {
@@ -148,10 +118,46 @@ namespace MobMentality
             SwitchWindow(State.Settings);
         }
 
+        #region MainWindow
+
+        private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            SetWindowSize();
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            SetWindowSize();
+        }
+
+        private void MainWindow_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (DataContext is null ||
+                _runningPage is null ||
+                _settingsPage is null ||
+                _switchPersonPage is null) return;
+
+            if (!(DataContext is MasterViewModel m)) return;
+
+            m.TimerUp += MOnTimerUp;
+
+            _runningPage.DataContext = this.DataContext;
+            _settingsPage.DataContext = this.DataContext;
+            _switchPersonPage.DataContext = this.DataContext;
+        }
+
+        private void MOnTimerUp(object sender, EventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                //if (DataContext is MasterViewModel m)
+                    SwitchWindow(State.SwitchPerson);
+            });
+        }
+
         private void MainWindow_MouseLeave(object sender, MouseEventArgs e)
         {
-            this.Width = 101;
-            this.Height = 101;
+            SetWindowSize();
         }
 
         private void MainWindow_MouseEnter(object sender, MouseEventArgs e)
@@ -171,6 +177,16 @@ namespace MobMentality
 
             MobSettings.Default.Save();
         }
+        
+        private void MainFrame_OnNavigating(object sender, NavigatingCancelEventArgs e)
+        {
+            if (e.NavigationMode == NavigationMode.Forward || e.NavigationMode == NavigationMode.Back)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        #endregion
 
         #endregion Events
 
@@ -180,12 +196,5 @@ namespace MobMentality
 
         #endregion
 
-        private void MainFrame_OnNavigating(object sender, NavigatingCancelEventArgs e)
-        {
-            if (e.NavigationMode == NavigationMode.Forward || e.NavigationMode == NavigationMode.Back)
-            {
-                e.Cancel = true;
-            }
-        }
     }
 }
