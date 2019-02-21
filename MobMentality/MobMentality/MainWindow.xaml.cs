@@ -28,12 +28,15 @@ namespace MobMentality
             this.MouseLeave += MainWindow_MouseLeave;
             this.DataContextChanged += MainWindow_DataContextChanged;
             this.SizeChanged += MainWindow_SizeChanged;
+            this.StateChanged += MainWindow_StateChanged;
 
             InitializeSession();
             InitializePages();
 
             SwitchWindow(State.Settings);
         }
+
+        
 
         #region Initialize
 
@@ -121,6 +124,11 @@ namespace MobMentality
         #region MainWindow
 
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            SetWindowSize();
+        }
+
+        private void MainWindow_StateChanged(object sender, EventArgs e)
         {
             SetWindowSize();
         }
