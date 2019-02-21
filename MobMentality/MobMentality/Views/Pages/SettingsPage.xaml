@@ -98,7 +98,8 @@
 
         <!--#region Start / Quit-->
         <Button Content="X"  Grid.Row="0" Grid.Column="3" VerticalContentAlignment="Center" HorizontalAlignment="Right" Height="46" VerticalAlignment="Top" Width="44" FontSize="20" Click="Button_Click" Panel.ZIndex="-1"/>
-        <Button Name="StartMobbingButton" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4" Content="Start Mobbing" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" FontSize="48" Margin="10" Click="StartMobbingButton_Click" />
+        <Button Name="StartMobbingButton" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="Start Mobbing" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" FontSize="48" Margin="10" Click="StartMobbingButton_Click" />
+        <Button Name="ContinueMobbingButton" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Content="Continue Mobbing" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" FontSize="48" Margin="10" Click="ContinueMobbingButton_Click" />
         <!--#endregion Start / Quit-->
 
     </Grid>

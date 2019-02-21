@@ -25,12 +25,17 @@ namespace MobMentality
     /// </summary>
     public partial class SettingsPage
     {
+        #region Ctor
+
         public SettingsPage()
         {
             InitializeComponent();
 
             NewPersonTextBox.KeyDown += NewPersonTextBox_KeyDown;
         }
+
+        #endregion
+
         #region Events
 
         private void NewPersonTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -40,17 +45,25 @@ namespace MobMentality
                 AddPerson();
             }
         }
-        
+
         public event EventHandler<object> StartMobbingEvent;
 
-        protected virtual void RaiseStartMobbing()
+        protected virtual void RaiseStartMobbing(bool startOver)
         {
-            if (DataContext is MasterViewModel m)
+            if (!(DataContext is MasterViewModel m)) return;
+
+            if (startOver || m.TimeLeft < 1 || m.TimeLeft > (m.TurnMinutes * 60))
             {
-                m.ResetBreaksCommand.Execute(null);
+
                 m.ResetTimerCommand.Execute(null);
-                m.StartTimerCommand.Execute(null);
+
+                if (startOver)
+                {
+                    m.ResetBreaksCommand.Execute(null);
+                }
             }
+
+            m.StartTimerCommand.Execute(null);
 
             StartMobbingEvent?.Invoke(this, EventArgs.Empty);
         }
@@ -59,7 +72,12 @@ namespace MobMentality
 
         private void StartMobbingButton_Click(object sender, RoutedEventArgs e)
         {
-            RaiseStartMobbing();
+            RaiseStartMobbing(true);
+        }
+
+        private void ContinueMobbingButton_Click(object sender, RoutedEventArgs e)
+        {
+            RaiseStartMobbing(false);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -67,7 +85,6 @@ namespace MobMentality
             Application.Current.Shutdown();
         }
 
-        
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             SettingsExportImport.Save(DataContext);
@@ -78,14 +95,16 @@ namespace MobMentality
             SettingsExportImport.Load();
         }
 
-        #endregion UI Click Events
-        
-        #endregion Events
-
         private void AddPersonButton_OnClick(object sender, RoutedEventArgs e)
         {
             AddPerson();
         }
+
+        #endregion UI Click Events
+
+        #endregion Events
+
+        #region Methods
 
         private void AddPerson()
         {
@@ -95,5 +114,7 @@ namespace MobMentality
                 NewPersonTextBox.Clear();
             }
         }
+
+        #endregion
     }
 }

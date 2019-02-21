@@ -27,21 +27,33 @@
         <!--#endregion-->
 
         <!--#region HoverButtons-->
-        <Grid>
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Button Name="SkipDriverButton" BorderBrush="Transparent" Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="23" Height="21" Click="SkipDriverButton_Click" FontFamily="Webdings" Content="8" FontSize="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Button Name="SkipDriverButton" Grid.Row="0" BorderBrush="Transparent" Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="23" Height="21" Click="SkipDriverButton_Click" FontFamily="Webdings" Content="8" FontSize="20">
                 <!--<Image Source="/Mob Mentality;component/icons/skip.png"/>-->
             </Button>
-            <Button Name="PauseButton" Grid.Column="1" BorderBrush="Transparent" Background="Transparent"  HorizontalAlignment="Center" VerticalAlignment="Top" Width="23" Height="21" Click="PauseButton_Click" FontFamily="Webdings" Content=";" FontSize="20">
+            <Button Name="PauseButton" Grid.Row="0" Grid.Column="1" BorderBrush="Transparent" Background="Transparent"  HorizontalAlignment="Center" VerticalAlignment="Top" Width="23" Height="21" Click="PauseButton_Click" FontFamily="Webdings" Content=";" FontSize="20">
                 <!--<Image Name="PauseButtonImage" Source="/Mob Mentality;component/icons/pause.png"/>-->
             </Button>
-            <Button Name="SettingsButton" Grid.Column="2" BorderBrush="Transparent" Background="Transparent"  HorizontalAlignment="Right" VerticalAlignment="Top" Width="23" Height="21" Click="SettingsButton_Click">
+            <Button Name="SettingsButton" Grid.Row="0" Grid.Column="2" BorderBrush="Transparent" Background="Transparent"  HorizontalAlignment="Right" VerticalAlignment="Top" Width="23" Height="21" Click="SettingsButton_Click">
                 <Image Source="/MioMob;component/icons/gear.png"/>
             </Button>
+            <WrapPanel Name="TurnsTakenPanel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+                <WrapPanel.Resources>
+                    <Style TargetType="{x:Type Ellipse}">
+                        <Setter Property="Margin" Value="2" />
+                        <!--<Setter Property="Padding" Value="10,10" />-->
+                    </Style>
+                </WrapPanel.Resources>
+            </WrapPanel>
         </Grid>
         <!--#endregion HoverButtons-->
     </Grid>

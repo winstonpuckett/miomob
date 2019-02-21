@@ -11,7 +11,7 @@ namespace MobMentality
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow 
     {
         private RunningPage _runningPage;
         private SettingsPage _settingsPage;
@@ -162,8 +162,7 @@ namespace MobMentality
 
         private void MainWindow_MouseEnter(object sender, MouseEventArgs e)
         {
-            this.Width = 140;
-            this.Height = 140;
+            SetWindowSize();
         }
 
         private void MainWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -180,6 +179,8 @@ namespace MobMentality
         
         private void MainFrame_OnNavigating(object sender, NavigatingCancelEventArgs e)
         {
+            SetWindowSize();
+
             if (e.NavigationMode == NavigationMode.Forward || e.NavigationMode == NavigationMode.Back)
             {
                 e.Cancel = true;
